@@ -1,5 +1,8 @@
+
+
+import 'package:alojibli/signin.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -11,7 +14,19 @@ class _LoginState extends State<Login> {
 
   final passwordController = TextEditingController();
 
+
  String? id   ; 
+ late UserCredential user; 
+
+AlertDialog alert = AlertDialog(  
+    title: Text("Simple Alert"),  
+    content: Text("This is an alert message."),  
+    actions: [  
+
+    ],  
+  );  
+
+ 
 
   Widget userInput(TextEditingController userInput, String hintTitle, TextInputType keyboardType,bool pass) {
     return Container(
@@ -20,6 +35,7 @@ class _LoginState extends State<Login> {
       child: Padding(
         padding: const EdgeInsets.only(left: 25.0, right: 25),
         child: TextField(
+          
           obscureText: pass,
           cursorColor: Colors.amber,
           controller: userInput,
@@ -90,12 +106,88 @@ class _LoginState extends State<Login> {
 
                     // final prefs = await SharedPreferences.getInstance();    
                     // await prefs.setString('user', emailController.text); 
-                     final SharedPreferences shared=await SharedPreferences.getInstance();
+                    /*
+                    try {
+                      final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+                      email: emailController.text,
+                      password: passwordController.text,
+                      
+                            );
+                    } on FirebaseAuthException catch (e) {
+                    if (e.code == 'weak-password') {
+                      print('The password provided is too weak.');
+                    } else if (e.code == 'email-already-in-use') {
+                      print('The account already exists for that email.');
+                      //Navigator.pushReplacement(context, new MaterialRou());
+                        showDialog(  
+                        context: context,  
+                        builder: (BuildContext context) {  
+                          return AlertDialog(
+                            title:Text("check accout data! ") ,
+                       alignment: Alignment.bottomCenter,
+                       content: Container(
+                         //color: Colors.red,
+                         child:Text("The account already exists for that email.",
+                         style: TextStyle(
+                           color: Colors.red,
+                           fontSize: 16,
+                           fontWeight:FontWeight.bold,
+                                  ),
+                                  ),
+                                  ),
+                               );  
+                          },  
+                      );
+                        
+                    }
+                    else{
+                       final SharedPreferences shared=await SharedPreferences.getInstance();
                                 shared.setString('ID',emailController.text);
                                                 print(' \n \n \n local :::::: ${shared.getString('ID')}\n \n \n');
                                                 // Get.off(Optverif()); 
                     Navigator.pushNamed(context, '/verif');
+                    }
+                    } catch (e) {
+                    print(e);
+                    }
+                    */
+                    try {
+                      user = await FirebaseAuth.instance.signInWithEmailAndPassword(
+                       email: emailController.text,
+                       password: passwordController.text
+                     );
+                   } on FirebaseAuthException catch (e) {
+                     if (e.code == 'user-not-found') {
+                       print('No user found for that email.');
+                     } else if (e.code == 'wrong-password') {
+                       print('Wrong password provided for that user.');
+                     }
+                   }
+                   //if(user.)
+                    //print(user);
+
+
+                   if(user.user?.emailVerified==false)
+                   {
+                     User? user=FirebaseAuth.instance.currentUser;
+                     await user?.sendEmailVerification();
+                     print(user);
+                   }
+                   var duration=Duration(seconds: 5);
+                  //  while(user.user?.emailVerified==false)
+                  //  {
+                  //     sleep(duration);
+                  //  }
+                   print(user.user?.emailVerified);
+
+                    //    final SharedPreferences shared=await SharedPreferences.getInstance();
+                    //             shared.setString('ID',emailController.text);
+                    //                print(' \n \n \n local :::::: ${shared.getString('ID')}\n \n \n');
+                    //                // Get.off(Optverif()); 
+                    // Navigator.pushNamed(context, '/verif');
+                    
                   },
+
                   child: const Text('se connecter', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: Colors.white,),),
                   ),
                 ),
@@ -114,7 +206,13 @@ class _LoginState extends State<Login> {
                     children: [
                       const Text('Vous n \'avez pas de compte ?', style: TextStyle(color: Colors.grey, fontStyle: FontStyle.italic),),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context){
+                            return Signin();
+                        }
+                        ),
+                        );
+                      },
                       child: const Text(
                         'Inscrivez-vous',
                         style: TextStyle(fontWeight: FontWeight.bold, color: Colors.amber),

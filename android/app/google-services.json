@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "194934256556",
+    "firebase_url": "https://alojibli-4f90d-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "alojibli-4f90d",
+    "storage_bucket": "alojibli-4f90d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:194934256556:android:daec66d0e5f1e7becf8009",
+        "android_client_info": {
+          "package_name": "com.example.alojibli"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "194934256556-ggidcprkeea332u4tf2etitk9nu8rkik.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.alojibli",
+            "certificate_hash": "864c94f9faa37d43e297c9b730a1d42b00ffd058"
+          }
+        },
+        {
+          "client_id": "194934256556-9cn6vaeea97mqlkvm5nnu7fmf8u65ccn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYIT7rOw0rhoNof1vqdK-OR1DkZFYdih8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "194934256556-9cn6vaeea97mqlkvm5nnu7fmf8u65ccn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

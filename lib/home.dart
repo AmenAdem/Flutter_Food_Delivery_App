@@ -14,7 +14,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home>  {
-
+  String ProfileImgUrl ="https://t4.ftcdn.net/jpg/03/64/21/11/360_F_364211147_1qgLVxv1Tcq0Ohz3FawUfrtONzz8nq3e.jpg"; 
   Future getvalidationdata()async{
     final SharedPreferences share =await SharedPreferences.getInstance();
     var obtaineid=share.getString('ID');
@@ -86,25 +86,48 @@ void initState(){
       drawer: Drawer(
         child: Column(
             children: [
-              Container(
-               
-                alignment: Alignment.center,
-                height: 200,
-                color:Colors.red,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                       decoration: BoxDecoration(
-                      color: Colors.blue,
-                  shape: BoxShape.circle,
-                ),
-                      child: Icon(Icons.person)),
+              Expanded(
+                flex: 1,
+                child: Container(
+                 
+                  alignment: Alignment.center,
+                  //height: 200,
+                 
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child:
+                      Container(
+                        alignment: Alignment.center,
+                         decoration: BoxDecoration(
 
-                  ],
+                           image:DecorationImage(
+                             image: 
+                            NetworkImage(
+                            ProfileImgUrl,
+                            ),
+                            //fit: BoxFit.fill,
+                           ) ,
+                        // color: Colors.blue,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Text(""),
+                      ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-              Container(child: Text("settings"),),
+              Divider(
+                color: Colors.black,
+              ),
+              Expanded(
+                flex: 3,
+                child: Container(
+                child: Text("settings"),
+                alignment: Alignment.center,
+              color: Colors.amber,)),
             ],
           ),
         ),

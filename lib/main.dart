@@ -1,11 +1,14 @@
 import 'package:alojibli/home.dart';
 import 'package:alojibli/login.dart';
 import 'package:alojibli/signin.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'otpverif.dart';
 
 
-void main() {
+void main()async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
