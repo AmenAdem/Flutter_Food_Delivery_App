@@ -132,8 +132,11 @@ Future Message(String title,String msg,Color c)
                     } catch (e) {
                     print(e);
                     }
+                     User? user2=FirebaseAuth.instance.currentUser;
+                      await user2?.sendEmailVerification();
+                    Message("Sign in with success","verification link sent to your email ",Colors.green);
+                    Navigator.pop(context);
 
-                    
 
                     // await FirebaseAuth.instance.verifyPhoneNumber(
                     //    phoneNumber: '+216 25 33 33 19',

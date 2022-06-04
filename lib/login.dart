@@ -1,8 +1,10 @@
 
 
+import 'package:alojibli/home.dart';
 import 'package:alojibli/signin.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -17,6 +19,32 @@ class _LoginState extends State<Login> {
 
  String? id   ; 
  late UserCredential user; 
+
+
+
+ Future Message(String title,String msg,Color c)
+{
+  return showDialog(  
+                        context: context,  
+                        builder: (BuildContext context) {  
+                          return AlertDialog(
+                            title:Text(title) ,
+                       alignment: Alignment.bottomCenter,
+                       content: Container(
+                         //color: Colors.red,
+                         child:Text(msg,
+                         style: TextStyle(
+                           color: c,
+                           fontSize: 16,
+                           fontWeight:FontWeight.bold,
+                                  ),
+                                  ),
+                                  ),
+                               );  
+                          },  
+                      );
+}
+
 
 AlertDialog alert = AlertDialog(  
     title: Text("Simple Alert"),  
@@ -165,24 +193,30 @@ AlertDialog alert = AlertDialog(
                    }
                    //if(user.)
                     //print(user);
-
-
                    if(user.user?.emailVerified==false)
                    {
-                     User? user=FirebaseAuth.instance.currentUser;
-                     await user?.sendEmailVerification();
-                     print(user);
+                     Message("Email verification", "email not verified yet !! ", Colors.red);
+
                    }
-                   var duration=Duration(seconds: 5);
+                   else
+                   {
+                                final SharedPreferences shared=await SharedPreferences.getInstance();
+                                shared.setString('ID',emailController.text);
+                                   print(' \n \n \n local :::::: ${shared.getString('ID')}\n \n \n');
+                                   Navigator.pushReplacement(
+                                     context,
+                                     new MaterialPageRoute(builder: (context)=>Home()),
+                                      );
+                   }
                   //  while(user.user?.emailVerified==false)
                   //  {
                   //     sleep(duration);
                   //  }
-                   print(user.user?.emailVerified);
+                   
 
-                    //    final SharedPreferences shared=await SharedPreferences.getInstance();
-                    //             shared.setString('ID',emailController.text);
-                    //                print(' \n \n \n local :::::: ${shared.getString('ID')}\n \n \n');
+                       final SharedPreferences shared=await SharedPreferences.getInstance();
+                                shared.setString('ID',emailController.text);
+                                   print(' \n \n \n local :::::: ${shared.getString('ID')}\n \n \n');
                     //                // Get.off(Optverif()); 
                     // Navigator.pushNamed(context, '/verif');
                     
